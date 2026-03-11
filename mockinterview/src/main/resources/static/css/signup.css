@@ -1,0 +1,239 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    height:100vh;
+    background:#020617;
+    color:white;
+    overflow:hidden;
+}
+
+/* PARTICLE BACKGROUND */
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+/* CONTAINER */
+
+.container{
+    position:relative;
+    z-index:1;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+/* LOGO */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:25px;
+    font-size:22px;
+    font-weight:600;
+}
+
+.icon{
+    background:linear-gradient(135deg,#6366f1,#a855f7);
+    padding:10px;
+    border-radius:10px;
+}
+
+/* CARD */
+
+.signup-card{
+
+    background:rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:40px;
+
+    width:380px;
+
+    border-radius:16px;
+
+    box-shadow:
+            0 10px 40px rgba(0,0,0,0.6),
+            0 0 30px rgba(168,85,247,0.1);
+
+}
+
+/* TITLE */
+
+.signup-card h1{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-bottom:25px;
+}
+
+/* LABEL */
+
+label{
+    font-size:14px;
+    margin-bottom:5px;
+    display:block;
+}
+
+/* INPUT */
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    background:#020617;
+
+    color:white;
+
+    transition:.3s;
+}
+
+input:focus{
+    outline:none;
+    border-color:#a855f7;
+    box-shadow:0 0 10px rgba(168,85,247,0.4);
+}
+
+/* SIGNUP BUTTON */
+
+.signup-btn{
+    width:100%;
+    padding:13px;
+
+    background:linear-gradient(90deg,#6366f1,#a855f7);
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    margin-top:10px;
+
+    transition:.3s;
+}
+
+.signup-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 5px 20px rgba(168,85,247,0.4);
+}
+
+/* DIVIDER */
+
+.divider{
+    display:flex;
+    align-items:center;
+    margin:22px 0;
+}
+
+.divider::before,
+.divider::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:rgba(255,255,255,0.1);
+}
+
+.divider span{
+    margin:0 10px;
+    color:#94a3b8;
+}
+
+/* GOOGLE */
+
+.google{
+    width:100%;
+    padding:11px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    color:white;
+
+    transition:.3s;
+}
+
+.google:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.google img{
+    width:18px;
+}
+
+/* LOGIN LINK */
+
+.login-link{
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.login-link a{
+    color:#a855f7;
+    text-decoration:none;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:25px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .signup-card{
+        width:100%;
+        padding:30px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Start Interview</title>
+
+    <link rel="stylesheet" href="/css/start_interview.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="interview-container">
+
+    <!-- HEADER -->
+
+    <header class="interview-header">
+
+        <div>
+            <h2>AI Mock Interview</h2>
+            <p>Frontend Developer Role</p>
+        </div>
+
+        <div class="interview-info">
+
+            <div class="timer">
+                <i class="fa fa-clock"></i>
+                <span id="time">25:00</span>
+            </div>
+
+            <div class="progress">
+                Question 1 / 5
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CHAT AREA -->
+
+    <div class="chat-area" id="chatArea">
+
+        <!-- AI MESSAGE -->
+
+        <div class="message ai">
+
+            <div class="avatar">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div class="bubble">
+                Tell me about yourself and your experience with frontend development.
+            </div>
+
+        </div>
+
+        <!-- USER MESSAGE SAMPLE -->
+
+        <div class="message user">
+
+            <div class="bubble">
+                I am a computer science student with experience in HTML, CSS, JavaScript and React...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- INPUT AREA -->
+
+    <div class="input-area">
+
+<textarea
+        id="userInput"
+        placeholder="Type your answer here..."
+></textarea>
+
+        <button id="sendBtn">
+            <i class="fa fa-paper-plane"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<script src="/js/start_interview.js"></script>
+
+</body>
+</html>

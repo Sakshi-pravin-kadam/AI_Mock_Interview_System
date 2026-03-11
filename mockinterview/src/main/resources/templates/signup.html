@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minternviewer - Sign Up</title>
+
+    <link rel="stylesheet" href="/css/signup.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+    <div class="logo">
+        <div class="icon">🧠</div>
+        <h2>Minternviewer</h2>
+    </div>
+
+    <div class="signup-card">
+
+        <h1>Create Account</h1>
+        <p class="subtitle">Start practicing AI interviews today</p>
+
+        <!-- FORM START -->
+
+<!--        <form action="/register" method="post" onsubmit="return validateSignup()">-->
+        <form onsubmit="return registerUser(event)">
+
+            <label for="name">Full Name</label>
+            <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+            >
+
+            <label for="email">Email</label>
+            <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+            >
+
+            <label for="password">Password</label>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create password"
+                    required
+            >
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    required
+            >
+
+            <button type="submit" class="signup-btn">
+                Create Account
+            </button>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <p class="login-link">
+                Already have an account?
+                <a href="/login.html">Sign in</a>
+            </p>
+
+        </form>
+
+        <!-- FORM END -->
+
+    </div>
+
+    <p class="footer">Powered by AI • Secure & Private</p>
+
+</div>
+
+<!-- PARTICLE BACKGROUND -->
+<script src="/js/login.js"></script>
+
+<!-- SIGNUP VALIDATION -->
+<script src="/js/signup.js"></script>
+
+</body>
+</html>

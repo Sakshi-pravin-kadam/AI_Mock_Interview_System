@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Interview Dashboard</title>
+
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<!-- Animated background -->
+<div class="ai-blob blob1"></div>
+<div class="ai-blob blob2"></div>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <i class="fa-solid fa-brain"></i>
+        <span>AI Interview</span>
+      </div>
+
+      <nav>
+
+        <a class="active"><i class="fa fa-th-large"></i> Dashboard</a>
+
+        <a href="start_interview.html">
+          <i class="fa fa-play-circle"></i> Start Interview
+        </a>
+
+        <a><i class="fa fa-file"></i> My Reports</a>
+
+        <a><i class="fa fa-user"></i> Profile</a>
+
+      </nav>
+
+    </div>
+
+    <!-- logout bottom -->
+
+    <div class="logout">
+      <i class="fa fa-sign-out-alt"></i> Logout
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <header class="header reveal">
+
+      <h1>Welcome back, Student 👋</h1>
+
+<!--      <button id="toggleSidebar">-->
+<!--        <i class="fa fa-bars"></i>-->
+<!--      </button>-->
+
+    </header>
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div class="card reveal">
+        <i class="fa fa-trophy"></i>
+        <h4>Overall Score</h4>
+        <h2>85%</h2>
+      </div>
+
+      <div class="card reveal">
+        <i class="fa fa-bullseye"></i>
+        <h4>Interviews</h4>
+        <h2>12</h2>
+      </div>
+
+      <div class="card reveal">
+        <i class="fa fa-clock"></i>
+        <h4>Avg Time</h4>
+        <h2>25m</h2>
+      </div>
+
+      <div class="card reveal">
+        <i class="fa fa-chart-line"></i>
+        <h4>Success</h4>
+        <h2>92%</h2>
+      </div>
+
+    </section>
+
+    <!-- CHART -->
+
+    <section class="chart-container reveal">
+
+      <h3>Performance Trend</h3>
+
+      <canvas id="performanceChart"></canvas>
+
+    </section>
+
+    <!-- RECENT INTERVIEWS -->
+
+    <section class="recent reveal">
+
+      <div class="recent-header">
+        <h3>Recent Interviews</h3>
+        <a>View All</a>
+      </div>
+
+      <div class="interview-card">
+        Frontend Developer Interview
+        <span>88%</span>
+      </div>
+
+      <div class="interview-card">
+        Data Science Internship
+        <span>92%</span>
+      </div>
+
+      <div class="interview-card">
+        Backend Engineer Role
+        <span>78%</span>
+      </div>
+
+    </section>
+
+    <!-- ACTIONS -->
+
+    <section class="actions">
+
+      <a href="start_interview.html" class="start-card magnetic">
+        <i class="fa fa-play"></i>
+        <div>
+          <h3>Start New Interview</h3>
+          <p>Begin AI interview</p>
+        </div>
+      </a>
+
+      <div class="resume-card magnetic">
+        <i class="fa fa-file"></i>
+        <div>
+          <h3>Upload Resume</h3>
+          <p>AI resume analysis</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- LIVE ACTIVITY -->
+
+    <section class="activity reveal">
+
+      <h3>Live Activity</h3>
+
+      <div class="activity-item">
+        <i class="fa fa-user"></i>
+        Student completed Frontend Interview
+      </div>
+
+      <div class="activity-item">
+        <i class="fa fa-chart-line"></i>
+        Score improved by 8%
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>
