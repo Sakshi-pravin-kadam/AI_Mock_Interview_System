@@ -121,7 +121,7 @@ function validateLogin(){
 
                 alert("Login successful");
 
-                window.location.href = "/index.html";
+                window.location.href = "/Home.html";
 
             }else{
 

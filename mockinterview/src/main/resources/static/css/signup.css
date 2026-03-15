@@ -6,34 +6,43 @@
 }
 
 body{
-    height:100vh;
+    /*height:100vh;*/
     background:#020617;
     color:white;
-    overflow:hidden;
+    min-height: 100vh;
+    overflow-y: auto;
+
 }
 
 /* PARTICLE BACKGROUND */
 
+/*canvas{*/
+/*    position:fixed;*/
+/*    top:0;*/
+/*    left:0;*/
+/*    width:100%;*/
+/*    height:100%;*/
+/*    z-index:0;*/
+/*}*/
 canvas{
     position:fixed;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    z-index:0;
+    z-index:-1;
 }
-
 /* CONTAINER */
 
 .container{
     position:relative;
     z-index:1;
-    height:100vh;
+    min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:center;
-    padding:20px;
+    justify-content:flex-start;   /* better for long forms */
+    padding:40px 20px;
 }
 
 /* LOGO */
