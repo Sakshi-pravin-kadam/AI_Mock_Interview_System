@@ -14,10 +14,12 @@ public class HomeController {
     public String Home(){
         return "Home";
     }
+
     @GetMapping("/index.html")
     public String index(){
         return "Home";
     }
+
     @GetMapping("/login.html")
     public String loginPage(){
         return "login";
@@ -31,6 +33,11 @@ public class HomeController {
     @GetMapping("/start_interview.html")
     public String startInterview() {
         return "start_interview";
+    }
+
+    @GetMapping("/interview.html")
+    public String interview() {
+        return "interview";
     }
 
     @GetMapping("/dashboard.html")

@@ -1,72 +1,152 @@
-let domain=""
-let difficulty="Intermediate"
+// Selected values
+let selectedDomain = "";
+let selectedDifficulty = "Beginner";
+
+// DOMAIN SELECTION
+document.querySelectorAll(".domain").forEach(card => {
+
+    card.addEventListener("click", function(){
+
+        // remove active from all
+        document.querySelectorAll(".domain")
+            .forEach(d => d.classList.remove("active"));
+
+        // add active to clicked
+        this.classList.add("active");
+
+        selectedDomain = this.dataset.domain;
+
+        loadTopics(selectedDomain);
+
+    });
+
+});
 
 
-/* domain selection */
+// LOAD TOPICS BASED ON DOMAIN
+function loadTopics(domain){
 
-document.querySelectorAll(".domain").forEach(card=>{
+    const topicSelect = document.getElementById("topic");
 
-    card.onclick=function(){
+    topicSelect.innerHTML = "<option value=''>Select topic</option>";
 
-        document.querySelectorAll(".domain").forEach(c=>c.classList.remove("active"))
+    const topics = {
 
-        this.classList.add("active")
+        java:[
+            "Core Java",
+            "Java OOP",
+            "Java Collections",
+            "Multithreading",
+            "Spring Boot"
+        ],
 
-        domain=this.dataset.domain
+        mern:[
+            "React",
+            "NodeJS",
+            "MongoDB",
+            "ExpressJS",
+            "REST API"
+        ],
 
-    }
+        python:[
+            "Python Basics",
+            "Data Structures",
+            "Machine Learning",
+            "Flask",
+            "Django"
+        ],
 
-})
+        data:[
+            "SQL",
+            "Power BI",
+            "Data Visualization",
+            "Statistics",
+            "ETL"
+        ]
 
+    };
 
-/* difficulty */
+    topics[domain].forEach(topic => {
 
-document.querySelectorAll(".level").forEach(card=>{
+        const option = document.createElement("option");
 
-    card.onclick=function(){
+        option.value = topic;
+        option.textContent = topic;
 
-        document.querySelectorAll(".level").forEach(c=>c.classList.remove("active"))
+        topicSelect.appendChild(option);
 
-        this.classList.add("active")
-
-        difficulty=this.dataset.level
-
-    }
-
-})
-
-
-/* start interview */
-
-function startInterview(){
-
-    let topic=document.getElementById("topic").value
-
-    if(!domain || !topic){
-
-        alert("Please select domain and topic")
-
-        return
-
-    }
-
-    localStorage.setItem("domain",domain)
-    localStorage.setItem("topic",topic)
-    localStorage.setItem("difficulty",difficulty)
-
-    window.location.href="interview.html"
+    });
 
 }
 
-const username = localStorage.getItem("username");
 
-if(username){
-    document.getElementById("username").textContent = username;
-}
-function logout(){
+// DIFFICULTY SELECTION
+document.querySelectorAll(".level").forEach(level => {
 
-    localStorage.clear();
+    level.addEventListener("click", function(){
 
-    window.location.href="login.html";
+        document.querySelectorAll(".level")
+            .forEach(l => l.classList.remove("active"));
+
+        this.classList.add("active");
+
+        selectedDifficulty = this.dataset.level;
+
+    });
+
+});
+
+
+// START INTERVIEW
+async function startInterview(){
+
+    const topic = document.getElementById("topic").value;
+
+    if(!selectedDomain){
+        alert("Please select a domain");
+        return;
+    }
+
+    if(!topic){
+        alert("Please select a topic");
+        return;
+    }
+
+    try{
+
+        const response = await fetch("http://localhost:8080/api/start-interview", {
+
+            method: "POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body: JSON.stringify({
+                domain: selectedDomain,
+                topic: topic,
+                difficulty: selectedDifficulty
+            })
+
+        });
+
+        const sessionId = await response.text();
+
+        // store interview data
+        localStorage.setItem("sessionId", sessionId);
+        localStorage.setItem("domain", selectedDomain);
+        localStorage.setItem("topic", topic);
+        localStorage.setItem("difficulty", selectedDifficulty);
+
+        // redirect to interview page
+        window.location.href = "interview.html";
+
+    }
+    catch(error){
+
+        console.error(error);
+        alert("Failed to start interview");
+
+    }
 
 }

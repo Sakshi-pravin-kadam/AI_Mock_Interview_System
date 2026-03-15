@@ -33,9 +33,9 @@
 
             <nav>
 
-                <a href="dashboard.html" class="active"><i class="fa fa-th-large"></i> Dashboard</a>
+                <a href="dashboard.html" ><i class="fa fa-th-large"></i> Dashboard</a>
 
-                <a href="start_interview.html">
+                <a href="start_interview.html" class="active">
                     <i class="fa fa-play-circle"></i> Start Interview
                 </a>
 
@@ -64,79 +64,76 @@
 
         <div class="grid">
 
-            <!-- DOMAIN CARD -->
+            <!-- DOMAIN -->
 
             <div class="card">
-
                 <h3>1. Choose Your Domain</h3>
 
                 <div class="domain-grid">
 
-                    <div class="domain" data-domain="Software Engineering">
-                        <i class="fa fa-laptop-code"></i>
-                        <span>Software Engineering</span>
+                    <div class="domain" data-domain="java">
+                        <i class="fa-brands fa-java"></i>
+                        <span>Java Full Stack</span>
                     </div>
 
-                    <div class="domain" data-domain="Data Science">
-                        <i class="fa fa-chart-line"></i>
-                        <span>Data Science</span>
+                    <div class="domain" data-domain="mern">
+                        <i class="fa-brands fa-react"></i>
+                        <span>MERN Stack</span>
                     </div>
 
-                    <div class="domain" data-domain="Product Management">
-                        <i class="fa fa-rocket"></i>
-                        <span>Product Management</span>
+                    <div class="domain" data-domain="python">
+                        <i class="fa-brands fa-python"></i>
+                        <span>Python / AI</span>
                     </div>
 
-                    <div class="domain" data-domain="System Design">
-                        <i class="fa fa-cogs"></i>
-                        <span>System Design</span>
+                    <div class="domain" data-domain="data">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Data Analytics</span>
                     </div>
 
                 </div>
-
             </div>
 
-            <!-- TOPIC + DIFFICULTY -->
+
+            <!-- TOPIC -->
 
             <div class="card">
 
                 <h3>2. Specify Your Topic</h3>
 
                 <select id="topic">
-                    <option value="">Search or select a topic</option>
-                    <option>Algorithms & Data Structures</option>
-                    <option>Java</option>
-                    <option>Spring Boot</option>
-                    <option>Machine Learning</option>
+                    <option value="">Select topic</option>
                 </select>
+
+            </div>
+
+
+            <!-- DIFFICULTY -->
+
+            <div class="card">
 
                 <h3>3. Choose Difficulty Level</h3>
 
                 <div class="difficulty">
 
-                    <div class="level" data-level="Beginner">
-                        ⭐ Beginner
-                    </div>
+                    <div class="level active" data-level="Beginner">⭐ Beginner</div>
 
-                    <div class="level active" data-level="Intermediate">
-                        ⭐⭐ Intermediate
-                    </div>
+                    <div class="level " data-level="Intermediate">⭐⭐ Intermediate</div>
 
-                    <div class="level" data-level="Advanced">
-                        ⭐⭐⭐ Advanced
-                    </div>
+                    <div class="level" data-level="Advanced">⭐⭐⭐ Advanced</div>
 
                 </div>
 
                 <button class="start-btn" onclick="startInterview()">
                     Begin Interview
                 </button>
-
                 <p class="note">
                     Your interview will be generated instantly based on these selections.
                 </p>
 
             </div>
+
+        </div>
 
         </div>
 
