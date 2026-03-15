@@ -120,6 +120,7 @@ function validateLogin(){
             if(data === "Login successful"){
 
                 alert("Login successful");
+                localStorage.setItem("username", email);
 
                 window.location.href = "/Home.html";
 

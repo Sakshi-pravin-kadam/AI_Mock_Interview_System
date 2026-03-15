@@ -1,23 +1,72 @@
-const sendBtn=document.getElementById("sendBtn");
-const input=document.getElementById("userInput");
-const chat=document.getElementById("chatArea");
+let domain=""
+let difficulty="Intermediate"
 
-sendBtn.onclick=function(){
 
-    const text=input.value.trim();
+/* domain selection */
 
-    if(text==="") return;
+document.querySelectorAll(".domain").forEach(card=>{
 
-    const msg=document.createElement("div");
+    card.onclick=function(){
 
-    msg.className="message user";
+        document.querySelectorAll(".domain").forEach(c=>c.classList.remove("active"))
 
-    msg.innerHTML=`<div class="bubble">${text}</div>`;
+        this.classList.add("active")
 
-    chat.appendChild(msg);
+        domain=this.dataset.domain
 
-    input.value="";
+    }
 
-    chat.scrollTop=chat.scrollHeight;
+})
 
-};
+
+/* difficulty */
+
+document.querySelectorAll(".level").forEach(card=>{
+
+    card.onclick=function(){
+
+        document.querySelectorAll(".level").forEach(c=>c.classList.remove("active"))
+
+        this.classList.add("active")
+
+        difficulty=this.dataset.level
+
+    }
+
+})
+
+
+/* start interview */
+
+function startInterview(){
+
+    let topic=document.getElementById("topic").value
+
+    if(!domain || !topic){
+
+        alert("Please select domain and topic")
+
+        return
+
+    }
+
+    localStorage.setItem("domain",domain)
+    localStorage.setItem("topic",topic)
+    localStorage.setItem("difficulty",difficulty)
+
+    window.location.href="interview.html"
+
+}
+
+const username = localStorage.getItem("username");
+
+if(username){
+    document.getElementById("username").textContent = username;
+}
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href="login.html";
+
+}

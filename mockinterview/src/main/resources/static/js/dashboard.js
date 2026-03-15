@@ -61,3 +61,15 @@ if(toggle){
     };
 }
 
+const username = localStorage.getItem("username");
+
+if(username){
+    document.getElementById("username").textContent = username;
+}
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href="login.html";
+
+}

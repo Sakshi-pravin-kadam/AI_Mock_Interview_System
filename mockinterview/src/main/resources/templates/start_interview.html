@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Start Interview</title>
 
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/start_interview.css">
+
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,76 +17,128 @@
 
 <body>
 
-<div class="interview-container">
+<div class="dashboard">
 
-    <!-- HEADER -->
+    <!-- SIDEBAR -->
 
-    <header class="interview-header">
+
+    <aside class="sidebar" id="sidebar">
 
         <div>
-            <h2>AI Mock Interview</h2>
-            <p>Frontend Developer Role</p>
-        </div>
 
-        <div class="interview-info">
-
-            <div class="timer">
-                <i class="fa fa-clock"></i>
-                <span id="time">25:00</span>
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>AI Interview</span>
             </div>
 
-            <div class="progress">
-                Question 1 / 5
-            </div>
+            <nav>
 
-        </div>
+                <a href="dashboard.html" class="active"><i class="fa fa-th-large"></i> Dashboard</a>
 
-    </header>
+                <a href="start_interview.html">
+                    <i class="fa fa-play-circle"></i> Start Interview
+                </a>
 
+                <a><i class="fa fa-file"></i> My Reports</a>
 
-    <!-- CHAT AREA -->
+                <a><i class="fa fa-user"></i> Profile</a>
 
-    <div class="chat-area" id="chatArea">
-
-        <!-- AI MESSAGE -->
-
-        <div class="message ai">
-
-            <div class="avatar">
-                <i class="fa-solid fa-robot"></i>
-            </div>
-
-            <div class="bubble">
-                Tell me about yourself and your experience with frontend development.
-            </div>
+            </nav>
 
         </div>
 
-        <!-- USER MESSAGE SAMPLE -->
+        <!-- logout bottom -->
 
-        <div class="message user">
+        <div class="logout" onclick="logout()">
+            <i class="fa fa-sign-out-alt"></i> Logout
+        </div>
 
-            <div class="bubble">
-                I am a computer science student with experience in HTML, CSS, JavaScript and React...
+    </aside>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1>Configure Your Interview</h1>
+        <p class="subtitle">Select the parameters for your session.</p>
+
+        <div class="grid">
+
+            <!-- DOMAIN CARD -->
+
+            <div class="card">
+
+                <h3>1. Choose Your Domain</h3>
+
+                <div class="domain-grid">
+
+                    <div class="domain" data-domain="Software Engineering">
+                        <i class="fa fa-laptop-code"></i>
+                        <span>Software Engineering</span>
+                    </div>
+
+                    <div class="domain" data-domain="Data Science">
+                        <i class="fa fa-chart-line"></i>
+                        <span>Data Science</span>
+                    </div>
+
+                    <div class="domain" data-domain="Product Management">
+                        <i class="fa fa-rocket"></i>
+                        <span>Product Management</span>
+                    </div>
+
+                    <div class="domain" data-domain="System Design">
+                        <i class="fa fa-cogs"></i>
+                        <span>System Design</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TOPIC + DIFFICULTY -->
+
+            <div class="card">
+
+                <h3>2. Specify Your Topic</h3>
+
+                <select id="topic">
+                    <option value="">Search or select a topic</option>
+                    <option>Algorithms & Data Structures</option>
+                    <option>Java</option>
+                    <option>Spring Boot</option>
+                    <option>Machine Learning</option>
+                </select>
+
+                <h3>3. Choose Difficulty Level</h3>
+
+                <div class="difficulty">
+
+                    <div class="level" data-level="Beginner">
+                        ⭐ Beginner
+                    </div>
+
+                    <div class="level active" data-level="Intermediate">
+                        ⭐⭐ Intermediate
+                    </div>
+
+                    <div class="level" data-level="Advanced">
+                        ⭐⭐⭐ Advanced
+                    </div>
+
+                </div>
+
+                <button class="start-btn" onclick="startInterview()">
+                    Begin Interview
+                </button>
+
+                <p class="note">
+                    Your interview will be generated instantly based on these selections.
+                </p>
+
             </div>
 
         </div>
-
-    </div>
-
-
-    <!-- INPUT AREA -->
-
-    <div class="input-area">
-
-<textarea
-        id="userInput"
-        placeholder="Type your answer here..."
-></textarea>
-
-        <button id="sendBtn">
-            <i class="fa fa-paper-plane"></i>
-        </button>
 
     </div>
 
