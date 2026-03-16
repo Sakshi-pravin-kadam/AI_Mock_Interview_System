@@ -7,14 +7,14 @@ const progress = document.querySelector(".progress");
 let questionCount = 1;
 const totalQuestions = 5;
 
-// session data
+// session data from previous page
 const sessionId = localStorage.getItem("sessionId");
 const domain = localStorage.getItem("domain");
 const topic = localStorage.getItem("topic");
 const difficulty = localStorage.getItem("difficulty");
 
 
-// SHOW AI MESSAGE
+// SHOW AI MESSAGE IN CHAT
 function addAIMessage(text){
 
     const msg = document.createElement("div");
@@ -28,8 +28,9 @@ function addAIMessage(text){
     `;
 
     chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
 
+    // auto scroll to latest message
+    chat.scrollTop = chat.scrollHeight;
 }
 
 
@@ -42,12 +43,12 @@ function addUserMessage(text){
     msg.innerHTML = `<div class="bubble">${text}</div>`;
 
     chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
 
+    chat.scrollTop = chat.scrollHeight;
 }
 
 
-// LOAD FIRST QUESTION
+// LOAD FIRST QUESTION WHEN INTERVIEW STARTS
 async function loadFirstQuestion(){
 
     const response = await fetch("http://localhost:8080/api/start-interview",{
@@ -69,27 +70,21 @@ async function loadFirstQuestion(){
     const question = await response.text();
 
     addAIMessage(question);
-
 }
 
 
-// SEND ANSWER
+// SEND USER ANSWER
 sendBtn.onclick = async function(){
 
     const text = input.value.trim();
 
+    // prevent empty answers
     if(text==="") return;
 
+    // show user message
     addUserMessage(text);
 
     input.value = "";
-
-    if(questionCount >= totalQuestions){
-
-        addAIMessage("Interview completed. Generating feedback...");
-        return;
-
-    }
 
     const response = await fetch("http://localhost:8080/api/question",{
 
@@ -106,20 +101,81 @@ sendBtn.onclick = async function(){
 
     });
 
-    const nextQuestion = await response.text();
+    const data = await response.json();
 
-    questionCount++;
 
-    progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
+    /*
+        Backend response structure
 
-    setTimeout(()=>{
-        addAIMessage(nextQuestion);
-    },800);
+        Normal response:
+        {
+            feedback: "...",
+            nextQuestion: "...",
+            completed: false
+        }
+
+        Final response:
+        {
+            completed: true,
+            finalScore: 78,
+            strengths: "...",
+            weaknesses: "...",
+            improvementPlan: "..."
+        }
+    */
+
+
+    // SHOW AI FEEDBACK
+    if(data.feedback){
+        setTimeout(()=>{
+            addAIMessage("Feedback:\n" + data.feedback);
+        },500);
+    }
+
+
+    // IF INTERVIEW IS COMPLETED
+    if(data.completed){
+
+        setTimeout(()=>{
+
+            addAIMessage(`
+Interview Completed 🎉
+
+Final Score: ${data.finalScore}/100
+
+Strengths:
+${data.strengths}
+
+Weak Areas:
+${data.weaknesses}
+
+What To Study:
+${data.improvementPlan}
+            `);
+
+        },1200);
+
+        return;
+    }
+
+
+    // SHOW NEXT QUESTION
+    if(data.nextQuestion){
+
+        questionCount++;
+
+        // update progress indicator
+        progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
+
+        setTimeout(()=>{
+            addAIMessage(data.nextQuestion);
+        },1200);
+    }
 
 };
 
 
-// TIMER
+// TIMER (25 minutes interview)
 let time = 25 * 60;
 
 function startTimer(){
@@ -139,6 +195,6 @@ function startTimer(){
 }
 
 
-// INIT
+// INITIALIZE INTERVIEW
 startTimer();
 loadFirstQuestion();

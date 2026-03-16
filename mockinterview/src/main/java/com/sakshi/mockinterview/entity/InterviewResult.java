@@ -1,8 +1,14 @@
 package com.sakshi.mockinterview.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
 
-public class InterviewSession {
+@Entity
+@Table(name = "interview_result")
+public class InterviewResult {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String sessionId;
 
@@ -11,16 +17,16 @@ public class InterviewSession {
     private String difficulty;
 
     private int totalQuestions;
-    private int currentQuestion;
     private int totalScore;
 
-    // store asked questions
-    private List<String> questionHistory;
+    private String bestTopic;
+    private String weakTopic;
 
-    // store score per question
-    private List<Integer> scores;
+    public InterviewResult() {}
 
-    public InterviewSession() {}
+    public Long getId() {
+        return id;
+    }
 
     public String getSessionId() {
         return sessionId;
@@ -62,14 +68,6 @@ public class InterviewSession {
         this.totalQuestions = totalQuestions;
     }
 
-    public int getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentQuestion(int currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
-
     public int getTotalScore() {
         return totalScore;
     }
@@ -78,19 +76,19 @@ public class InterviewSession {
         this.totalScore = totalScore;
     }
 
-    public List<String> getQuestionHistory() {
-        return questionHistory;
+    public String getBestTopic() {
+        return bestTopic;
     }
 
-    public void setQuestionHistory(List<String> questionHistory) {
-        this.questionHistory = questionHistory;
+    public void setBestTopic(String bestTopic) {
+        this.bestTopic = bestTopic;
     }
 
-    public List<Integer> getScores() {
-        return scores;
+    public String getWeakTopic() {
+        return weakTopic;
     }
 
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
+    public void setWeakTopic(String weakTopic) {
+        this.weakTopic = weakTopic;
     }
 }
