@@ -5,12 +5,12 @@ const progress = document.querySelector(".progress");
 
 // interview state
 let questionCount = 1;
-let totalQuestions = 5;
+let totalQuestions = localStorage.getItem("totalQuestions") || 5;
 
 // session data
 let sessionId = localStorage.getItem("sessionId");
 
-// USER INFO CHECK (must be logged in)
+// USER INFO CHECK
 const userId = localStorage.getItem("userId");
 const domain = localStorage.getItem("domain");
 const topic = localStorage.getItem("topic");
@@ -24,7 +24,7 @@ if (!userId) {
 
 // Redirect if no active session
 if (!sessionId) {
-    alert("No active interview session found. Please start an interview.");
+    alert("No active interview session found.");
     window.location.href = "start_interview.html";
 }
 
@@ -51,32 +51,36 @@ function addUserMessage(text){
     chat.scrollTop = chat.scrollHeight;
 }
 
-// LOAD FIRST QUESTION
+// ✅ LOAD FIRST QUESTION (FIXED)
 async function loadFirstQuestion(){
-    // If we already have sessionId (resume interview), skip creating new
-    if (!sessionId) {
-        const response = await fetch("http://localhost:8080/api/start-interview",{
+
+    try{
+        addAIMessage("Loading question...");
+
+        const response = await fetch("http://localhost:8080/api/first-question",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify({
-                userId: userId,
-                domain: domain,
-                topic: topic,
-                difficulty: difficulty
+            body: JSON.stringify({
+                sessionId: sessionId
             })
         });
 
+        if(!response.ok){
+            throw new Error("Failed to fetch question");
+        }
+
         const data = await response.json();
 
-        // store sessionId
-        sessionId = data.sessionId;
-        localStorage.setItem("sessionId", sessionId);
-
-        totalQuestions = data.totalQuestions;
+        // remove loading message
+        chat.lastChild.remove();
 
         addAIMessage(data.question);
+
+    } catch(error){
+        console.error(error);
+        addAIMessage("❌ Error loading question");
     }
 
     progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
@@ -90,47 +94,52 @@ sendBtn.onclick = async function(){
     addUserMessage(text);
     input.value = "";
 
-    const response = await fetch("http://localhost:8080/api/question",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            sessionId: sessionId,
-            answer: text
-        })
-    });
+    try{
+        const response = await fetch("http://localhost:8080/api/question",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                sessionId: sessionId,
+                answer: text
+            })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    // SHOW FEEDBACK
-    if(data.feedback){
-        setTimeout(()=> addAIMessage(`Feedback:\n${data.feedback}`), 500);
-    }
+        // SHOW FEEDBACK
+        if(data.feedback){
+            setTimeout(()=> addAIMessage(`Feedback:\n${data.feedback}`), 500);
+        }
 
-    // IF INTERVIEW COMPLETED
-    if(data.completed){
-        setTimeout(()=>{
-            addAIMessage(`
+        // ✅ INTERVIEW COMPLETED
+        if(data.completed){
+            setTimeout(()=>{
+                addAIMessage(`
 Interview Completed 🎉
 
-Final Score: ${data.finalScore}
+Final Score: ${data.finalScore} / ${data.maxScore}
 
 Best Topic: ${data.bestTopic}
 Weak Topic: ${data.weakTopic}
-            `);
-        }, 1200);
+                `);
+            }, 1200);
 
-        // clear sessionId after completion
-        localStorage.removeItem("sessionId");
-        return;
-    }
+            localStorage.removeItem("sessionId");
+            return;
+        }
 
-    // SHOW NEXT QUESTION
-    if(data.nextQuestion){
-        questionCount++;
-        progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
-        setTimeout(()=> addAIMessage(data.nextQuestion), 1200);
+        // NEXT QUESTION
+        if(data.nextQuestion){
+            questionCount++;
+            progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
+            setTimeout(()=> addAIMessage(data.nextQuestion), 1200);
+        }
+
+    } catch(error){
+        console.error(error);
+        addAIMessage("❌ Error submitting answer");
     }
 };
 
@@ -146,6 +155,6 @@ function startTimer(){
     },1000);
 }
 
-// INITIALIZE INTERVIEW
+// INITIALIZE
 startTimer();
 loadFirstQuestion();

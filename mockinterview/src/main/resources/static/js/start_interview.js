@@ -42,11 +42,11 @@ document.querySelectorAll(".level").forEach(level => {
 });
 
 // START INTERVIEW
-let isStarting = false; // ✅ prevent multiple clicks
+let isStarting = false;
 
 async function startInterview(){
 
-    if(isStarting) return; // block double click
+    if(isStarting) return;
     isStarting = true;
 
     const btn = document.getElementById("startBtn");
@@ -57,22 +57,23 @@ async function startInterview(){
 
     if(!selectedDomain){
         alert("Please select a domain");
-        resetButton(btn);
-        return;
+        return resetButton(btn);
     }
 
     if(!topic){
         alert("Please select a topic");
-        resetButton(btn);
-        return;
+        return resetButton(btn);
     }
 
     const userId = localStorage.getItem("userId");
     if(!userId){
-        alert("You must be logged in to start the interview.");
+        alert("You must be logged in.");
         window.location.href = "/login.html";
         return;
     }
+
+    // ✅ CLEAR OLD SESSION (important fix)
+    localStorage.removeItem("sessionId");
 
     try{
         const response = await fetch("http://localhost:8080/api/start-interview", {
@@ -88,21 +89,22 @@ async function startInterview(){
             })
         });
 
+        if(!response.ok){
+            throw new Error("Server error");
+        }
+
         const data = await response.json();
 
-        console.log("START RESPONSE:", data); // ✅ debug
+        console.log("START RESPONSE:", data);
 
-        // ✅ STORE EVERYTHING IMPORTANT
+        // ✅ STORE SESSION DATA
         localStorage.setItem("sessionId", data.sessionId);
         localStorage.setItem("domain", selectedDomain);
         localStorage.setItem("topic", topic);
         localStorage.setItem("difficulty", selectedDifficulty);
-
-        // ⭐ IMPORTANT FIX (YOU MISSED THIS)
-        localStorage.setItem("firstQuestion", data.question);
         localStorage.setItem("totalQuestions", data.totalQuestions);
 
-        // redirect
+        // ⚡ FAST REDIRECT
         window.location.href = "interview.html";
 
     } catch(error){
@@ -112,7 +114,6 @@ async function startInterview(){
     }
 }
 
-// helper function
 function resetButton(btn){
     isStarting = false;
     btn.disabled = false;

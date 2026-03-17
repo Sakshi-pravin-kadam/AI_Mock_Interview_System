@@ -10,7 +10,9 @@ public class InterviewSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)  // ✅ ensures sessionId is always unique in DB
     private String sessionId;
+
     private Long userId;
 
     private String domain;
