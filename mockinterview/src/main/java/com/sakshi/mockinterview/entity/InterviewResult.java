@@ -19,7 +19,10 @@ public class InterviewResult {
     private int totalQuestions;
     private int totalScore;
 
+    @Column(columnDefinition = "TEXT")
     private String bestTopic;
+
+    @Column(columnDefinition = "TEXT")
     private String weakTopic;
 
     public InterviewResult() {}

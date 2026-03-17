@@ -6,7 +6,13 @@ import com.sakshi.mockinterview.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,37 +22,58 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    // =========================
+    // REGISTER
+    // =========================
     @PostMapping("/register")
-    public String registerUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user) {
 
-        if(userRepository.findByEmail(user.getEmail()) != null){
-            return "Email already exists";
+        Map<String, Object> response = new HashMap<>();
+
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            response.put("message", "Email already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        // Encrypt password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userRepository.save(user);
-        return "User registered successfully";
+
+        response.put("message", "User registered successfully");
+
+        return ResponseEntity.ok(response);
     }
 
+    // =========================
+    // LOGIN
+    // =========================
     @PostMapping("/login")
-    public String loginUser(@RequestBody User user){
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody User user) {
+
+        Map<String, Object> response = new HashMap<>();
 
         User existingUser = userRepository.findByEmail(user.getEmail());
 
-        if(existingUser == null){
-            return "User not found";
+        if (existingUser == null) {
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        // Compare encrypted password
-        if(passwordEncoder.matches(user.getPassword(), existingUser.getPassword())){
-            return "Login successful";
-        }else{
-            return "Invalid password";
+        if (passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+
+            response.put("message", "Login successful");
+            response.put("userId", existingUser.getId());
+            response.put("name", existingUser.getName());
+
+            // 🔐 Future ready: add JWT token here
+            // response.put("token", "your-jwt-token");
+
+            return ResponseEntity.ok(response);
+
+        } else {
+            response.put("message", "Invalid password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
-
 }

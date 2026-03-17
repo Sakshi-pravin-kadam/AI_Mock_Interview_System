@@ -1,10 +1,17 @@
 package com.sakshi.mockinterview.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "interview_session")
 public class InterviewSession {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String sessionId;
+    private Long userId;
 
     private String domain;
     private String topic;
@@ -14,83 +21,31 @@ public class InterviewSession {
     private int currentQuestion;
     private int totalScore;
 
-    // store asked questions
-    private List<String> questionHistory;
-
-    // store score per question
-    private List<Integer> scores;
-
     public InterviewSession() {}
 
-    public String getSessionId() {
-        return sessionId;
-    }
+    public Long getId() { return id; }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
+    public String getSessionId() { return sessionId; }
+    public void setSessionId(String sessionId) { this.sessionId = sessionId; }
 
-    public String getDomain() {
-        return domain;
-    }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+    public String getDomain() { return domain; }
+    public void setDomain(String domain) { this.domain = domain; }
 
-    public String getTopic() {
-        return topic;
-    }
+    public String getTopic() { return topic; }
+    public void setTopic(String topic) { this.topic = topic; }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+    public String getDifficulty() { return difficulty; }
+    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
+    public int getTotalQuestions() { return totalQuestions; }
+    public void setTotalQuestions(int totalQuestions) { this.totalQuestions = totalQuestions; }
 
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
+    public int getCurrentQuestion() { return currentQuestion; }
+    public void setCurrentQuestion(int currentQuestion) { this.currentQuestion = currentQuestion; }
 
-    public int getTotalQuestions() {
-        return totalQuestions;
-    }
-
-    public void setTotalQuestions(int totalQuestions) {
-        this.totalQuestions = totalQuestions;
-    }
-
-    public int getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentQuestion(int currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public List<String> getQuestionHistory() {
-        return questionHistory;
-    }
-
-    public void setQuestionHistory(List<String> questionHistory) {
-        this.questionHistory = questionHistory;
-    }
-
-    public List<Integer> getScores() {
-        return scores;
-    }
-
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
-    }
+    public int getTotalScore() { return totalScore; }
+    public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
 }
