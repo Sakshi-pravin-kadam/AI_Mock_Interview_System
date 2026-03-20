@@ -1,3 +1,4 @@
+
 const sendBtn = document.getElementById("sendBtn");
 const input = document.getElementById("userInput");
 const chat = document.getElementById("chatArea");
@@ -16,6 +17,14 @@ const domain = localStorage.getItem("domain");
 const topic = localStorage.getItem("topic");
 const difficulty = localStorage.getItem("difficulty");
 
+console.log("User ID:", userId);
+console.log("Domain:", domain);
+console.log("Topic:", topic);
+console.log("Difficulty:", difficulty);
+console.log("Session ID:", sessionId);
+
+document.querySelector(".interview-header p").innerText =
+    `${domain} - ${topic}`;
 // Redirect if user not logged in
 if (!userId) {
     alert("You must be logged in to start the interview.");
@@ -69,27 +78,29 @@ function addUserMessage(text){
 // ✅ LOAD FIRST QUESTION (FIXED)
 async function loadFirstQuestion(){
 
+    // 🛑 SAFETY CHECK
+    if(!domain || !topic || !difficulty){
+        addAIMessage("⚠ Session data missing. Please restart interview.");
+        return;
+    }
+
+    // ✅ 1️⃣ SHOW INTRO FIRST (Immediately)
+    addAIMessage(`
+        <b>Smart Mock Interview Started</b><br><br>
+        Domain: ${domain}<br>
+        Topic: ${topic}<br>
+        Difficulty: ${difficulty}<br><br>
+        Please answer clearly and confidently.<br>
+        Let’s begin with your first question.
+        `);
+
+    // ✅ Small delay so intro renders BEFORE loader
+    await new Promise(resolve => setTimeout(resolve, 400));
+
+    // ✅ 2️⃣ SHOW LOADER AFTER INTRO
+    const loader = addLoaderMessage();
+
     try{
-        // ✅ 1. Show intro
-        const introMsg = `
-Great, I have your session details ready.
-
-Domain: ${domain}
-Topic: ${topic}
-Difficulty: ${difficulty}
-
-I'll be your interviewer today. Let's begin 🚀
-        `;
-
-        addAIMessage(introMsg);
-
-        // ✅ 2. Force DOM render before adding loader
-        await new Promise(resolve => requestAnimationFrame(resolve));
-
-        // ✅ 3. Show loader immediately BELOW intro
-        const loader = addLoaderMessage();
-
-        // API call
         const response = await fetch("http://localhost:8080/api/first-question",{
             method:"POST",
             headers:{
@@ -106,18 +117,20 @@ I'll be your interviewer today. Let's begin 🚀
 
         const data = await response.json();
 
-        // ✅ 4. Remove loader ONLY
+        // ✅ 3️⃣ REMOVE LOADER
         loader.remove();
 
-        // ✅ 5. Show question BELOW intro
+        // ✅ 4️⃣ SHOW QUESTION
         addAIMessage(data.question);
+
+        totalQuestions = data.totalQuestions;
+        progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
 
     } catch(error){
         console.error(error);
+        loader.remove();
         addAIMessage("❌ Error loading question");
     }
-
-    progress.innerText = `Question ${questionCount} / ${totalQuestions}`;
 }
 
 // SEND USER ANSWER

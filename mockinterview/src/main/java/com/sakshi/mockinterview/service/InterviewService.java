@@ -51,6 +51,10 @@ public class InterviewService {
         result.put("currentQuestion", 1);
         result.put("totalQuestions", totalQuestions);
 
+        result.put("domain", domain);
+        result.put("topic", topic);
+        result.put("difficulty", difficulty);
+
         return result;
     }
 
@@ -71,7 +75,12 @@ public class InterviewService {
         String question = callAI(prompt);
 
         Map<String, Object> result = new HashMap<>();
+        // ✅ ADD THESE
         result.put("question", question);
+        result.put("domain", session.getDomain());
+        result.put("topic", session.getTopic());
+        result.put("difficulty", session.getDifficulty());
+        result.put("totalQuestions", session.getTotalQuestions());
 
         return result;
     }
@@ -188,6 +197,7 @@ public class InterviewService {
 
         return result;
     }
+
 
     // ---------------- HELPER METHODS ----------------
 
