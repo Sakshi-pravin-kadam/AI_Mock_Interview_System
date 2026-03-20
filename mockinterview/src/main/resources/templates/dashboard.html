@@ -43,7 +43,7 @@
           <i class="fa fa-play-circle"></i> Start Interview
         </a>
 
-        <a><i class="fa fa-file"></i> My Reports</a>
+        <a href="reports.html"><i class="fa fa-file"></i> My Reports</a>
 
         <a><i class="fa fa-user"></i> Profile</a>
 
@@ -67,10 +67,6 @@
 
       <h1>Welcome back, <span id="username">Student</span> 👋</h1>
 
-<!--      <button id="toggleSidebar">-->
-<!--        <i class="fa fa-bars"></i>-->
-<!--      </button>-->
-
     </header>
 
     <!-- STATS -->
@@ -80,25 +76,25 @@
       <div class="card reveal">
         <i class="fa fa-trophy"></i>
         <h4>Overall Score</h4>
-        <h2>85%</h2>
+        <h2 id="overallScore">0%</h2>
       </div>
 
       <div class="card reveal">
         <i class="fa fa-bullseye"></i>
-        <h4>Interviews</h4>
-        <h2>12</h2>
+        <h4>Total Interviews</h4>
+        <h2 id="totalInterviews">0</h2>
       </div>
 
       <div class="card reveal">
-        <i class="fa fa-clock"></i>
-        <h4>Avg Time</h4>
-        <h2>25m</h2>
+        <i class="fa fa-star"></i>
+        <h4>Strongest Topic</h4>
+        <h2 id="bestTopic">-</h2>
       </div>
 
       <div class="card reveal">
-        <i class="fa fa-chart-line"></i>
-        <h4>Success</h4>
-        <h2>92%</h2>
+        <i class="fa fa-exclamation-circle"></i>
+        <h4>Focus Area</h4>
+        <h2 id="weakTopic">-</h2>
       </div>
 
     </section>
@@ -122,19 +118,8 @@
         <a>View All</a>
       </div>
 
-      <div class="interview-card">
-        Frontend Developer Interview
-        <span>88%</span>
-      </div>
-
-      <div class="interview-card">
-        Data Science Internship
-        <span>92%</span>
-      </div>
-
-      <div class="interview-card">
-        Backend Engineer Role
-        <span>78%</span>
+      <div id="recentContainer">
+        <!-- JS will dynamically insert recent interviews here -->
       </div>
 
     </section>
@@ -169,12 +154,12 @@
 
       <div class="activity-item">
         <i class="fa fa-user"></i>
-        Student completed Frontend Interview
+        Interview activity updates will appear here
       </div>
 
       <div class="activity-item">
         <i class="fa fa-chart-line"></i>
-        Score improved by 8%
+        Performance insights powered by AI
       </div>
 
     </section>
@@ -183,7 +168,8 @@
 
 </div>
 
-<script src="/js/dashboard.js"></script>
+<!--<script src="/js/dashboard.js"></script>-->
+<script src="/js/dashboard.js?v=2"></script>
 
 </body>
 </html>

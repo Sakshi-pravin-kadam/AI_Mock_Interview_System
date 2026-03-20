@@ -44,4 +44,9 @@ public class HomeController {
     public String dashboard(){
         return "dashboard";
     }
+
+    @GetMapping("/reports.html")
+    public String reports() {
+        return "reports";
+    }
 }

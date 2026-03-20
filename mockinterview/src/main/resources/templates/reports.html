@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports | AI Interview</title>
+    <link rel="stylesheet" href="/css/reports.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div>
+            <div class="logo">AI Interview</div>
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="interview.html">Start Interview</a>
+                <a class="active">My Reports</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+        <div class="logout" onclick="logout()">Logout</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <h1>Interview Reports</h1>
+
+        <!-- SUMMARY -->
+        <div class="stats">
+            <div class="card">
+                <h3>Total Interviews</h3>
+                <h2 id="totalInterviews">0</h2>
+            </div>
+            <div class="card">
+                <h3>Average Score</h3>
+                <h2 id="averageScore">0%</h2>
+            </div>
+            <div class="card">
+                <h3>Best Topic</h3>
+                <h2 id="bestTopic">-</h2>
+            </div>
+            <div class="card">
+                <h3>Weak Topic</h3>
+                <h2 id="weakTopic">-</h2>
+            </div>
+        </div>
+
+        <!-- CHART -->
+        <div class="chart-container">
+            <h3>Performance Trend</h3>
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="recent">
+            <h3>Interview History</h3>
+            <div id="historyContainer"></div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/reports.js"></script>
+</body>
+</html>

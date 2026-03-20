@@ -1,6 +1,7 @@
 package com.sakshi.mockinterview.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "interview_result")
@@ -9,6 +10,9 @@ public class InterviewResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // ✅ ADD THIS (very important for dashboard filtering)
+    private Long userId;
 
     private String sessionId;
 
@@ -19,16 +23,34 @@ public class InterviewResult {
     private int totalQuestions;
     private int totalScore;
 
+    // ✅ Store percentage directly (makes dashboard easier)
+    private double percentage;
+
+    // ✅ Needed for performance trend & recent interviews
+    private LocalDateTime createdAt;
+
     @Column(columnDefinition = "TEXT")
     private String bestTopic;
 
     @Column(columnDefinition = "TEXT")
     private String weakTopic;
 
-    public InterviewResult() {}
+    public InterviewResult() {
+        this.createdAt = LocalDateTime.now(); // auto timestamp
+    }
+
+    // ---------------- GETTERS & SETTERS ----------------
 
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getSessionId() {
@@ -77,6 +99,18 @@ public class InterviewResult {
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public String getBestTopic() {

@@ -315,12 +315,21 @@ public class InterviewService {
 
         InterviewResult result = new InterviewResult();
 
+        result.setUserId(session.getUserId()); // ✅ IMPORTANT
+
         result.setSessionId(session.getSessionId());
         result.setDomain(session.getDomain());
         result.setTopic(session.getTopic());
         result.setDifficulty(session.getDifficulty());
         result.setTotalQuestions(session.getTotalQuestions());
         result.setTotalScore(session.getTotalScore());
+
+        // ✅ Calculate percentage
+        double percentage =
+                ((double) session.getTotalScore() /
+                        (session.getTotalQuestions() * 10)) * 100;
+
+        result.setPercentage(Math.round(percentage));
 
         result.setBestTopic(bestTopic);
         result.setWeakTopic(weakTopic);
