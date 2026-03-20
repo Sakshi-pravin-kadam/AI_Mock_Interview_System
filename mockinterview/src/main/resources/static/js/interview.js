@@ -41,7 +41,22 @@ function addAIMessage(text){
     chat.appendChild(msg);
     chat.scrollTop = chat.scrollHeight;
 }
+function addLoaderMessage(){
+    const msg = document.createElement("div");
+    msg.className = "message ai loader";
 
+    msg.innerHTML = `
+        <div class="avatar">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="bubble">⏳ Generating question...</div>
+    `;
+
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
+
+    return msg; // important for removal later
+}
 // SHOW USER MESSAGE
 function addUserMessage(text){
     const msg = document.createElement("div");
@@ -55,8 +70,26 @@ function addUserMessage(text){
 async function loadFirstQuestion(){
 
     try{
-        addAIMessage("Loading question...");
+        // ✅ 1. Show intro
+        const introMsg = `
+Great, I have your session details ready.
 
+Domain: ${domain}
+Topic: ${topic}
+Difficulty: ${difficulty}
+
+I'll be your interviewer today. Let's begin 🚀
+        `;
+
+        addAIMessage(introMsg);
+
+        // ✅ 2. Force DOM render before adding loader
+        await new Promise(resolve => requestAnimationFrame(resolve));
+
+        // ✅ 3. Show loader immediately BELOW intro
+        const loader = addLoaderMessage();
+
+        // API call
         const response = await fetch("http://localhost:8080/api/first-question",{
             method:"POST",
             headers:{
@@ -73,9 +106,10 @@ async function loadFirstQuestion(){
 
         const data = await response.json();
 
-        // remove loading message
-        chat.lastChild.remove();
+        // ✅ 4. Remove loader ONLY
+        loader.remove();
 
+        // ✅ 5. Show question BELOW intro
         addAIMessage(data.question);
 
     } catch(error){

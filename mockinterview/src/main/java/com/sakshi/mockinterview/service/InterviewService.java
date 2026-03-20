@@ -131,25 +131,26 @@ public class InterviewService {
     private Map<String, String> analyzePerformance(InterviewSession session) {
 
         String prompt = """
-        You are an interview evaluator.
-
-        Domain: %s
-        Topic: %s
-        Total Score: %d out of %d
-
-        Analyze candidate performance and return STRICT format:
-
-        BEST_TOPIC:
-        <one strong area>
-
-        WEAK_TOPIC:
-        <one weak area>
-        """.formatted(
-                session.getDomain(),
-                session.getTopic(),
-                session.getTotalScore(),
-                session.getTotalQuestions() * 10
-        );
+            You are an interview evaluator.
+            
+            Domain: %s
+            Topic: %s
+            Total Score: %d out of %d
+            
+            Return STRICT format (NO explanation, ONLY 1-3 words):
+            
+            BEST_TOPIC: <only topic name, max 3 words>
+            WEAK_TOPIC: <only topic name, max 3 words>
+            
+            Example:
+            BEST_TOPIC: Polymorphism
+            WEAK_TOPIC: Abstract Classes
+            """.formatted(
+                            session.getDomain(),
+                            session.getTopic(),
+                            session.getTotalScore(),
+                            session.getTotalQuestions() * 10
+                    );
 
         String response = callAI(prompt);
 
@@ -163,6 +164,18 @@ public class InterviewService {
             if (b != -1 && w != -1) {
                 bestTopic = response.substring(b + 11, w).trim();
                 weakTopic = response.substring(w + 11).trim();
+
+                // ✅ CLEAN: take only first line
+                bestTopic = bestTopic.split("\n")[0].trim();
+                weakTopic = weakTopic.split("\n")[0].trim();
+
+                // ✅ LIMIT LENGTH (critical)
+                if (bestTopic.length() > 50) {
+                    bestTopic = bestTopic.substring(0, 50);
+                }
+                if (weakTopic.length() > 50) {
+                    weakTopic = weakTopic.substring(0, 50);
+                }
             }
         } catch (Exception e) {
             bestTopic = "General Concepts";
